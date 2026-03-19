@@ -274,8 +274,7 @@ const SellerDashboard: React.FC = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => {'/profile'}}
-              >
+               onClick={() => navigate('/profile')}>
                 <User className="h-5 w-5" />
               </Button>
               <Button variant="ghost" size="icon" onClick={logout}>
