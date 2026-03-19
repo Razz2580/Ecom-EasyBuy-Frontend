@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Store, 
   Package, 
@@ -34,7 +35,7 @@ import type { Product, OrderDTO, ProductRequest, SellerDTO } from '@/types';
 
 const SellerDashboard: React.FC = () => {
   const { user, logout } = useAuth();
-  
+  const navigate = useNavigate();
   // State
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<OrderDTO[]>([]);
@@ -272,7 +273,7 @@ const SellerDashboard: React.FC = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => {/* Navigate to profile */}}
+                onClick={() => {'/profile'}}
               >
                 <User className="h-5 w-5" />
               </Button>
