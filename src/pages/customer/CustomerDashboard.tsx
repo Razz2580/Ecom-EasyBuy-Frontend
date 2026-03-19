@@ -183,13 +183,7 @@ const handlePlaceOrder = async (
     toast.error('Order failed', { description: message });
   }
 };
-      // Redirect to payment page
-      navigate(`/payment/${order.id}`);
-    } catch (error: any) {
-      const message = error.response?.data?.message || 'Failed to place order';
-      toast.error('Order failed', { description: message });
-    }
-  };
+   
 
   const handlePayOrder = (orderId: number) => {
     navigate(`/payment/${orderId}`);
