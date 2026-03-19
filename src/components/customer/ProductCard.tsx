@@ -109,13 +109,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onClick, inde
                 </p>
               )}
             </div>
-            
-            {product.distance !== undefined && (
+             {product.distance !== undefined && (
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                <span>{product.distance.toFixed(1)} km</span>
+              <MapPin className="h-4 w-4" />
+             <span>{(product.distance?.toFixed(1) ?? '?')} km</span>
               </div>
-            )}
+             )}
           </div>
         </CardContent>
       </Card>
