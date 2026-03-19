@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Truck, 
   MapPin, 
@@ -34,6 +35,7 @@ const RiderDashboard: React.FC = () => {
   const { user, logout } = useAuth();
   
   // State
+  const navigate = useNavigate();
   const [riderProfile, setRiderProfile] = useState<RiderDTO | null>(null);
   const [availableDeliveries, setAvailableDeliveries] = useState<DeliveryDTO[]>([]);
   const [myDeliveries, setMyDeliveries] = useState<DeliveryDTO[]>([]);
@@ -309,7 +311,7 @@ const RiderDashboard: React.FC = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => {/* Navigate to profile */}}
+               onClick={() => navigate('/profile')}
               >
                 <User className="h-5 w-5" />
               </Button>
