@@ -18,7 +18,7 @@ interface ProductDetailProps {
   product: Product | null;
   isOpen: boolean;
   onClose: () => void;
-  onOrder: (quantity: number, deliveryAddress: string, latitude?: number, longitude?: number) => void;
+  onOrder: (quantity: number, deliveryAddress: string, latitude?: number, longitude?: number, deliveryMethod?: string, paymentMethod?: string) => void;
   userAddress?: string;
 }
 
@@ -33,6 +33,9 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
   const [deliveryAddress, setDeliveryAddress] = useState(userAddress);
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+
+  const [deliveryMethod, setDeliveryMethod] = useState<'rider' | 'self'>('rider');
+  const [paymentMethod, setPaymentMethod] = useState<'online' | 'cod'>('online');
 
   if (!product) return null;
 
@@ -62,18 +65,22 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
     );
   };
 
-  const handlePlaceOrder = () => {
-    onOrder(
-      quantity,
-      deliveryAddress,
-      location?.lat,
-      location?.lng
-    );
-    // Reset state
-    setQuantity(1);
-    setDeliveryAddress(userAddress);
-    setLocation(null);
-  };
+ const handlePlaceOrder = () => {
+  onOrder(
+    quantity,
+    deliveryAddress,
+    location?.lat,
+    location?.lng,
+    deliveryMethod,
+    paymentMethod
+  );
+  // Reset state
+  setQuantity(1);
+  setDeliveryAddress(userAddress);
+  setLocation(null);
+  setDeliveryMethod('rider');
+  setPaymentMethod('online');
+};
 
   const canOrder = quantity > 0 && 
                    quantity <= product.stock && 
@@ -174,6 +181,64 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                 </Button>
               </div>
             </div>
+
+            {/* Delivery Method */}
+<div className="space-y-2">
+  <Label>Delivery Method</Label>
+  <div className="flex gap-4">
+    <div className="flex items-center space-x-2">
+      <input
+        type="radio"
+        id="rider"
+        value="rider"
+        checked={deliveryMethod === 'rider'}
+        onChange={() => setDeliveryMethod('rider')}
+        className="h-4 w-4"
+      />
+      <Label htmlFor="rider">Rider Delivery</Label>
+    </div>
+    <div className="flex items-center space-x-2">
+      <input
+        type="radio"
+        id="self"
+        value="self"
+        checked={deliveryMethod === 'self'}
+        onChange={() => setDeliveryMethod('self')}
+        className="h-4 w-4"
+      />
+      <Label htmlFor="self">Self Pickup</Label>
+    </div>
+  </div>
+</div>
+
+{/* Payment Method */}
+<div className="space-y-2">
+  <Label>Payment Method</Label>
+  <div className="flex gap-4">
+    <div className="flex items-center space-x-2">
+      <input
+        type="radio"
+        id="online"
+        value="online"
+        checked={paymentMethod === 'online'}
+        onChange={() => setPaymentMethod('online')}
+        className="h-4 w-4"
+      />
+      <Label htmlFor="online">Pay Online Now</Label>
+    </div>
+    <div className="flex items-center space-x-2">
+      <input
+        type="radio"
+        id="cod"
+        value="cod"
+        checked={paymentMethod === 'cod'}
+        onChange={() => setPaymentMethod('cod')}
+        className="h-4 w-4"
+      />
+      <Label htmlFor="cod">Cash on Delivery</Label>
+    </div>
+  </div>
+</div>
 
             {/* Delivery Address */}
             <div className="space-y-2">
