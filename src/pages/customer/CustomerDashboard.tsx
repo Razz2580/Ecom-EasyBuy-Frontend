@@ -142,41 +142,41 @@ const CustomerDashboard: React.FC = () => {
     setIsProductDetailOpen(true);
   };
 
-  const handlePlaceOrder = async (
+const handlePlaceOrder = async (
   quantity: number,
   deliveryAddress: string,
   latitude?: number,
   longitude?: number,
   deliveryMethod?: string,
   paymentMethod?: string
-  ) => {
-    if (!selectedProduct) return;
+) => {
+  if (!selectedProduct) return;
 
-    try {
-      const orderRequest: OrderRequest = {
-        productId: selectedProduct.id,
-        quantity,
-        deliveryAddress,
-        customerLatitude: latitude,
-        customerLongitude: longitude,
-        deliveryMethod,   // add
-        paymentMethod,    // add
-      };
+  try {
+    const orderRequest: OrderRequest = {
+      productId: selectedProduct.id,
+      quantity,
+      deliveryAddress,
+      customerLatitude: latitude,
+      customerLongitude: longitude,
+      deliveryMethod,
+      paymentMethod,
+    };
 
-       const order = await orderAPI.createOrder(orderRequest);
-       setOrders((prev) => [order, ...prev]);
-       setIsProductDetailOpen(false);
+    const order = await orderAPI.createOrder(orderRequest);
+    setOrders((prev) => [order, ...prev]);
+    setIsProductDetailOpen(false);
 
-          if (paymentMethod === 'online') {
-       toast.success('Order placed successfully!', {           // THere might be issue
-       description: 'Redirecting to payment...',
+    if (paymentMethod === 'online') {
+      toast.success('Order placed successfully!', {
+        description: 'Redirecting to payment...',
       });
       navigate(`/payment/${order.id}`);
-         } else {
-        toast.success('Order placed successfully!', {
+    } else {
+      toast.success('Order placed successfully!', {
         description: 'You will pay upon delivery.',
-        });
-    // stay on dashboard
+      });
+      // stay on dashboard
     }
   } catch (error: any) {
     const message = error.response?.data?.message || 'Failed to place order';
