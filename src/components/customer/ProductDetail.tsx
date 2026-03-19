@@ -182,7 +182,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
               </div>
             </div>
 
-            {/* Delivery Method */}
+ {/* Delivery Method */}
 <div className="space-y-2">
   <Label>Delivery Method</Label>
   <div className="flex gap-4">
@@ -190,6 +190,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
       <input
         type="radio"
         id="rider"
+        name="deliveryMethod"
         value="rider"
         checked={deliveryMethod === 'rider'}
         onChange={() => setDeliveryMethod('rider')}
@@ -201,6 +202,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
       <input
         type="radio"
         id="self"
+        name="deliveryMethod"
         value="self"
         checked={deliveryMethod === 'self'}
         onChange={() => setDeliveryMethod('self')}
@@ -219,6 +221,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
       <input
         type="radio"
         id="online"
+        name="paymentMethod"
         value="online"
         checked={paymentMethod === 'online'}
         onChange={() => setPaymentMethod('online')}
@@ -230,6 +233,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
       <input
         type="radio"
         id="cod"
+        name="paymentMethod"
         value="cod"
         checked={paymentMethod === 'cod'}
         onChange={() => setPaymentMethod('cod')}
@@ -239,7 +243,6 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
     </div>
   </div>
 </div>
-
             {/* Delivery Address */}
             <div className="space-y-2">
               <Label htmlFor="deliveryAddress">Delivery Address</Label>
