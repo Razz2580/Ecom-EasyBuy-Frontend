@@ -284,6 +284,14 @@ export const riderAPI = {
     const response = await api.put<DeliveryDTO>(`/rider/deliveries/${deliveryId}/status?status=${status}`);
     return response.data;
   },
+   getBankDetails: async (): Promise<{ accountHolder: string; accountNumber: string; ifsc: string; upiId?: string }> => {
+    const response = await api.get('/rider/bank-details');
+    return response.data;
+  },
+
+  updateBankDetails: async (data: { accountHolder: string; accountNumber: string; ifsc: string; upiId?: string }): Promise<void> => {
+    await api.put('/rider/bank-details', data);
+  },
 };
 
 // ============================================
