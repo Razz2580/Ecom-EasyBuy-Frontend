@@ -139,10 +139,10 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                 <Package className="h-4 w-4 text-muted-foreground" />
                 <span>{product.stock} in stock</span>
               </div>
-              {product.distance !== undefined && (
+              {product.distance != null && (
                 <div className="flex items-center gap-1">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span>{product.distance.toFixed(1)} km away</span>
+                  <span>{product.distance.toFixed(1)?? '?'} km away</span>
                 </div>
               )}
             </div>
