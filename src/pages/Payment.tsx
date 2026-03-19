@@ -1,8 +1,3 @@
-/**
- * Payment Page
- * Stripe payment integration for orders
- */
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -125,24 +120,28 @@ const Payment: React.FC = () => {
   const [order, setOrder] = useState<OrderDTO | null>(null);
   const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (orderId) {
       fetchOrderAndPaymentIntent(parseInt(orderId));
+    } else {
+      setErrorMessage('Invalid order ID');
+      setIsLoading(false);
     }
   }, [orderId]);
 
   const fetchOrderAndPaymentIntent = async (id: number) => {
     try {
       setIsLoading(true);
+      setErrorMessage(null);
       
       // Fetch order details
       const orders = await orderAPI.getMyOrders();
       const order = orders.find((o) => o.id === id);
       
       if (!order) {
-        toast.error('Order not found');
-        navigate('/customer');
+        setErrorMessage('Order not found');
         return;
       }
       
@@ -151,9 +150,9 @@ const Payment: React.FC = () => {
       // Create payment intent
       const payment = await paymentAPI.createPaymentIntent({ orderId: id });
       setPaymentData(payment);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to initialize payment:', error);
-      toast.error('Failed to initialize payment');
+      setErrorMessage(error.response?.data?.message || 'Failed to initialize payment');
     } finally {
       setIsLoading(false);
     }
@@ -163,8 +162,35 @@ const Payment: React.FC = () => {
     navigate('/customer', { state: { paymentSuccess: true } });
   };
 
+  const retry = () => {
+    if (orderId) {
+      fetchOrderAndPaymentIntent(parseInt(orderId));
+    }
+  };
+
   if (isLoading) {
     return <LoadingSpinner fullScreen text="Initializing payment..." />;
+  }
+
+  if (errorMessage) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardContent className="p-8 text-center">
+            <p className="text-destructive mb-2">{errorMessage}</p>
+            <p className="text-sm text-muted-foreground mb-4">
+              Please check your connection and try again.
+            </p>
+            <div className="flex gap-2 justify-center">
+              <Button onClick={retry}>Retry</Button>
+              <Button variant="outline" onClick={() => navigate('/customer')}>
+                Go Back
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   if (!order || !paymentData) {
