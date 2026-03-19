@@ -232,6 +232,11 @@ export const sellerAPI = {
     const response = await api.put('/seller/bank-details', data);
     return response.data;
   },
+  getBankDetails: async (): Promise<{ accountHolder: string; accountNumber: string; ifsc: string; upiId?: string }> => {
+    const response = await api.get('/seller/bank-details');
+    return response.data;
+  },
+
 };
 
 // ============================================
