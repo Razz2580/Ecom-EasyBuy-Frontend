@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { apiService } from '@/services/api';
-import { sellerAPI, riderAPI } from '@/services/api';
+import { userAPI, sellerAPI, riderAPI } from '@/services/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -18,7 +17,7 @@ const ProfilePage = () => {
   const [phone, setPhone] = useState(user?.phone || '');
   const [address, setAddress] = useState(user?.address || '');
   
-  // Bank details state (for sellers and riders)
+  // Bank details state (for sellers and riders) – upiId optional
   const [bankDetails, setBankDetails] = useState({
     accountHolder: '',
     accountNumber: '',
@@ -31,25 +30,39 @@ const ProfilePage = () => {
 
   // Load bank details if user is seller or rider
   useEffect(() => {
-    if (user?.role === UserRole.SELLER) {
-      sellerAPI.getBankDetails()
-        .then(data => setBankDetails(data))
-        .catch(err => console.log('No bank details yet'));
-    } else if (user?.role === UserRole.RIDER) {
-      riderAPI.getBankDetails()
-        .then(data => setBankDetails(data))
-        .catch(err => console.log('No bank details yet'));
-    }
+    const loadBankDetails = async () => {
+      try {
+        if (user?.role === UserRole.SELLER) {
+          const data = await sellerAPI.getBankDetails();
+          setBankDetails({
+            accountHolder: data.accountHolder || '',
+            accountNumber: data.accountNumber || '',
+            ifsc: data.ifsc || '',
+            upiId: data.upiId || '',
+          });
+        } else if (user?.role === UserRole.RIDER) {
+          const data = await riderAPI.getBankDetails();
+          setBankDetails({
+            accountHolder: data.accountHolder || '',
+            accountNumber: data.accountNumber || '',
+            ifsc: data.ifsc || '',
+            upiId: data.upiId || '',
+          });
+        }
+      } catch {
+        // Silently fail if no bank details exist yet
+      }
+    };
+    loadBankDetails();
   }, [user]);
 
   const handleSaveProfile = async () => {
     setLoading(true);
     try {
-      const updatedUser = await apiService.updateUserProfile({ fullName, phone, address });
+      const updatedUser = await userAPI.updateProfile({ fullName, phone, address });
       updateUser(updatedUser);
       toast.success('Profile updated successfully');
-    } catch (error) {
-      console.error(error);
+    } catch {
       toast.error('Failed to update profile');
     } finally {
       setLoading(false);
@@ -65,8 +78,7 @@ const ProfilePage = () => {
         await riderAPI.updateBankDetails(bankDetails);
       }
       toast.success('Bank details saved');
-    } catch (error) {
-      console.error(error);
+    } catch {
       toast.error('Failed to save bank details');
     } finally {
       setLoading(false);
