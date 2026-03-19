@@ -35,7 +35,7 @@ import type { Product, OrderDTO, ProductRequest, SellerDTO } from '@/types';
 
 const SellerDashboard: React.FC = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  
   // State
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<OrderDTO[]>([]);
@@ -47,6 +47,7 @@ const SellerDashboard: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sellerLocation, setSellerLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [activeTab, setActiveTab] = useState('products');
+  const navigate = useNavigate();
 
   // Stats
   const [stats, setStats] = useState({
