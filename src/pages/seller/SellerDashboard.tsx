@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import BankDetailsForm from '@/components/seller/BankDetailsForm';
 import { 
   Store, 
   Package, 
