@@ -228,11 +228,10 @@ export const sellerAPI = {
     return response.data;
   },
 
-  // Add to sellerAPI object
-updateBankDetails: async (data: { accountHolder: string; accountNumber: string; ifsc: string; upiId?: string }): Promise<void> => {
-  const response = await api.put('/seller/bank-details', data);
-  return response.data;
-},
+  updateBankDetails: async (data: { accountHolder: string; accountNumber: string; ifsc: string; upiId?: string }): Promise<void> => {
+    const response = await api.put('/seller/bank-details', data);
+    return response.data;
+  },
 };
 
 // ============================================
