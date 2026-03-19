@@ -142,6 +142,8 @@ export interface OrderRequest {
   customerLatitude?: number;
   customerLongitude?: number;
   deliveryAddress?: string;
+  deliveryMethod?: string;   // 'rider' | 'self'
+  paymentMethod?: string;    // 'online' | 'cod'
 }
 
 // ============================================
