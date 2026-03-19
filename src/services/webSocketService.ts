@@ -9,7 +9,7 @@ import { getToken } from './api';
 import type { OrderDTO, NotificationDTO, DeliveryDTO, RiderLocationMessage } from '@/types';
 
 // WebSocket URL
-const WS_URL = (import.meta.env.VITE_API_URL || 'https://easybuy-backend-production.up.railway.app').replace(/^http/, 'ws') + '/ws';
+const WS_URL = (import.meta.env.VITE_API_URL || 'https://easybuy-backend-production.up.railway.app') + '/ws';
 
 // Callback types
 type OrderCallback = (order: OrderDTO) => void;
