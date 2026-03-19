@@ -1,8 +1,3 @@
-/**
- * Product Detail Modal
- * Shows product details and allows placing orders
- */
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Minus, Plus, MapPin, Store, Package, ShoppingCart } from 'lucide-react';
@@ -33,7 +28,6 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
   const [deliveryAddress, setDeliveryAddress] = useState(userAddress);
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
-
   const [deliveryMethod, setDeliveryMethod] = useState<'rider' | 'self'>('rider');
   const [paymentMethod, setPaymentMethod] = useState<'online' | 'cod'>('online');
 
@@ -65,26 +59,24 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
     );
   };
 
- const handlePlaceOrder = () => {
-  onOrder(
-    quantity,
-    deliveryAddress,
-    location?.lat,
-    location?.lng,
-    deliveryMethod,
-    paymentMethod
-  );
-  // Reset state
-  setQuantity(1);
-  setDeliveryAddress(userAddress);
-  setLocation(null);
-  setDeliveryMethod('rider');
-  setPaymentMethod('online');
-};
+  const handlePlaceOrder = () => {
+    onOrder(
+      quantity,
+      deliveryAddress,
+      location?.lat,
+      location?.lng,
+      deliveryMethod,
+      paymentMethod
+    );
+    // Reset state
+    setQuantity(1);
+    setDeliveryAddress(userAddress);
+    setLocation(null);
+    setDeliveryMethod('rider');
+    setPaymentMethod('online');
+  };
 
-  const canOrder = quantity > 0 && 
-                   quantity <= product.stock && 
-                   deliveryAddress.trim().length > 0;
+  const canOrder = quantity > 0 && quantity <= product.stock && deliveryAddress.trim().length > 0;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -111,11 +103,8 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                 <Package className="h-24 w-24 text-muted-foreground" />
               </div>
             )}
-            
             {product.category && (
-              <Badge className="absolute top-2 left-2">
-                {product.category}
-              </Badge>
+              <Badge className="absolute top-2 left-2">{product.category}</Badge>
             )}
           </motion.div>
 
@@ -133,13 +122,8 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
               </div>
             </div>
 
-            <p className="text-3xl font-bold text-primary">
-              {formatPrice(product.price)}
-            </p>
-
-            {product.description && (
-              <p className="text-muted-foreground">{product.description}</p>
-            )}
+            <p className="text-3xl font-bold text-primary">{formatPrice(product.price)}</p>
+            {product.description && <p className="text-muted-foreground">{product.description}</p>}
 
             <div className="flex items-center gap-4 text-sm">
               <div className="flex items-center gap-1">
@@ -149,7 +133,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
               {product.distance != null && (
                 <div className="flex items-center gap-1">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span>{product.distance.toFixed(1)?? '?'} km away</span>
+                  <span>{product.distance.toFixed(1)} km away</span>
                 </div>
               )}
             </div>
@@ -160,89 +144,78 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
             <div className="space-y-2">
               <Label>Quantity</Label>
               <div className="flex items-center gap-3">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleQuantityChange(-1)}
-                  disabled={quantity <= 1}
-                >
+                <Button variant="outline" size="icon" onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>
                   <Minus className="h-4 w-4" />
                 </Button>
-                <span className="text-xl font-semibold w-12 text-center">
-                  {quantity}
-                </span>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleQuantityChange(1)}
-                  disabled={quantity >= product.stock}
-                >
+                <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
+                <Button variant="outline" size="icon" onClick={() => handleQuantityChange(1)} disabled={quantity >= product.stock}>
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
             </div>
 
- {/* Delivery Method */}
-<div className="space-y-2">
-  <Label>Delivery Method</Label>
-  <div className="flex gap-4">
-    <div className="flex items-center space-x-2">
-      <input
-        type="radio"
-        id="rider"
-        name="deliveryMethod"
-        value="rider"
-        checked={deliveryMethod === 'rider'}
-        onChange={() => setDeliveryMethod('rider')}
-        className="h-4 w-4"
-      />
-      <Label htmlFor="rider">Rider Delivery</Label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <input
-        type="radio"
-        id="self"
-        name="deliveryMethod"
-        value="self"
-        checked={deliveryMethod === 'self'}
-        onChange={() => setDeliveryMethod('self')}
-        className="h-4 w-4"
-      />
-      <Label htmlFor="self">Self Pickup</Label>
-    </div>
-  </div>
-</div>
+            {/* Delivery Method */}
+            <div className="space-y-2">
+              <Label>Delivery Method</Label>
+              <div className="flex gap-4">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="rider"
+                    name="deliveryMethod"
+                    value="rider"
+                    checked={deliveryMethod === 'rider'}
+                    onChange={() => setDeliveryMethod('rider')}
+                    className="h-4 w-4"
+                  />
+                  <Label htmlFor="rider">Rider Delivery</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="self"
+                    name="deliveryMethod"
+                    value="self"
+                    checked={deliveryMethod === 'self'}
+                    onChange={() => setDeliveryMethod('self')}
+                    className="h-4 w-4"
+                  />
+                  <Label htmlFor="self">Self Pickup</Label>
+                </div>
+              </div>
+            </div>
 
-{/* Payment Method */}
-<div className="space-y-2">
-  <Label>Payment Method</Label>
-  <div className="flex gap-4">
-    <div className="flex items-center space-x-2">
-      <input
-        type="radio"
-        id="online"
-        name="paymentMethod"
-        value="online"
-        checked={paymentMethod === 'online'}
-        onChange={() => setPaymentMethod('online')}
-        className="h-4 w-4"
-      />
-      <Label htmlFor="online">Pay Online Now</Label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <input
-        type="radio"
-        id="cod"
-        name="paymentMethod"
-        value="cod"
-        checked={paymentMethod === 'cod'}
-        onChange={() => setPaymentMethod('cod')}
-        className="h-4 w-4"
-      />
-      <Label htmlFor="cod">Cash on Delivery</Label>
-    </div>
-  </div>
-</div>
+            {/* Payment Method */}
+            <div className="space-y-2">
+              <Label>Payment Method</Label>
+              <div className="flex gap-4">
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="online"
+                    name="paymentMethod"
+                    value="online"
+                    checked={paymentMethod === 'online'}
+                    onChange={() => setPaymentMethod('online')}
+                    className="h-4 w-4"
+                  />
+                  <Label htmlFor="online">Pay Online Now</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    id="cod"
+                    name="paymentMethod"
+                    value="cod"
+                    checked={paymentMethod === 'cod'}
+                    onChange={() => setPaymentMethod('cod')}
+                    className="h-4 w-4"
+                  />
+                  <Label htmlFor="cod">Cash on Delivery</Label>
+                </div>
+              </div>
+            </div>
+
             {/* Delivery Address */}
             <div className="space-y-2">
               <Label htmlFor="deliveryAddress">Delivery Address</Label>
@@ -277,13 +250,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({
                 <span className="text-muted-foreground">Total</span>
                 <span className="text-2xl font-bold">{formatPrice(totalPrice)}</span>
               </div>
-
-              <Button
-                size="lg"
-                className="w-full"
-                onClick={handlePlaceOrder}
-                disabled={!canOrder}
-              >
+              <Button size="lg" className="w-full" onClick={handlePlaceOrder} disabled={!canOrder}>
                 <ShoppingCart className="h-5 w-5 mr-2" />
                 Place Order
               </Button>
