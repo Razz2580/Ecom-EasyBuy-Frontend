@@ -383,8 +383,7 @@ const SellerDashboard: React.FC = () => {
           </Card>
         </motion.div>
 
-        {/* Bank Details Form */}
-           <BankDetailsForm />
+       
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
