@@ -176,9 +176,13 @@ const CustomerDashboard: React.FC = () => {
         toast.success('Order placed successfully!', {
         description: 'You will pay upon delivery.',
         });
-  // stay on dashboard
-     }
-
+    // stay on dashboard
+    }
+  } catch (error: any) {
+    const message = error.response?.data?.message || 'Failed to place order';
+    toast.error('Order failed', { description: message });
+  }
+};
       // Redirect to payment page
       navigate(`/payment/${order.id}`);
     } catch (error: any) {
