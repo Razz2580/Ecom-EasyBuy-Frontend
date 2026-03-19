@@ -143,10 +143,12 @@ const CustomerDashboard: React.FC = () => {
   };
 
   const handlePlaceOrder = async (
-    quantity: number,
-    deliveryAddress: string,
-    latitude?: number,
-    longitude?: number
+  quantity: number,
+  deliveryAddress: string,
+  latitude?: number,
+  longitude?: number,
+  deliveryMethod?: string,
+  paymentMethod?: string
   ) => {
     if (!selectedProduct) return;
 
@@ -157,15 +159,25 @@ const CustomerDashboard: React.FC = () => {
         deliveryAddress,
         customerLatitude: latitude,
         customerLongitude: longitude,
+        deliveryMethod,   // add
+        paymentMethod,    // add
       };
 
-      const order = await orderAPI.createOrder(orderRequest);
-      setOrders((prev) => [order, ...prev]);
-      setIsProductDetailOpen(false);
-      
-      toast.success('Order placed successfully!', {
-        description: 'Redirecting to payment...',
+       const order = await orderAPI.createOrder(orderRequest);
+       setOrders((prev) => [order, ...prev]);
+       setIsProductDetailOpen(false);
+
+          if (paymentMethod === 'online') {
+       toast.success('Order placed successfully!', {           // THere might be issue
+       description: 'Redirecting to payment...',
       });
+      navigate(`/payment/${order.id}`);
+         } else {
+        toast.success('Order placed successfully!', {
+        description: 'You will pay upon delivery.',
+        });
+  // stay on dashboard
+     }
 
       // Redirect to payment page
       navigate(`/payment/${order.id}`);
