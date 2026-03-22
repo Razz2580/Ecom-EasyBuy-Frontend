@@ -179,7 +179,7 @@ const Register: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/20 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -194,21 +194,23 @@ const Register: React.FC = () => {
           className="flex justify-center mb-8"
         >
           <div className="flex items-center gap-3">
-            <div className="h-12 w-12 bg-primary rounded-xl flex items-center justify-center">
-              <ShoppingBag className="h-7 w-7 text-primary-foreground" />
+            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+              <ShoppingBag className="h-7 w-7 text-white" />
             </div>
-            <span className="text-2xl font-bold">EasyBuy</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              EasyBuy
+            </span>
           </div>
         </motion.div>
 
-        <Card className="border-0 shadow-xl">
-          <CardHeader className="space-y-1">
+        <Card className="border-0 shadow-xl rounded-2xl overflow-hidden">
+          <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-2xl text-center">Create an account</CardTitle>
             <CardDescription className="text-center">
               Join EasyBuy and start your journey
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6">
             {/* Step Indicator */}
             <div className="flex items-center justify-center gap-2 mb-6">
               {steps.map((step, index) => (
@@ -216,8 +218,8 @@ const Register: React.FC = () => {
                   <motion.div
                     className={`flex items-center justify-center w-10 h-10 rounded-full ${
                       steps.indexOf(currentStep) >= index
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted text-muted-foreground'
+                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white'
+                        : 'bg-gray-100 text-gray-400'
                     }`}
                     animate={{
                       scale: currentStep === step ? 1.1 : 1,
@@ -228,7 +230,7 @@ const Register: React.FC = () => {
                   {index < steps.length - 1 && (
                     <div
                       className={`w-8 h-0.5 ${
-                        steps.indexOf(currentStep) > index ? 'bg-primary' : 'bg-muted'
+                        steps.indexOf(currentStep) > index ? 'bg-gradient-to-r from-indigo-600 to-purple-600' : 'bg-gray-200'
                       }`}
                     />
                   )}
@@ -248,16 +250,16 @@ const Register: React.FC = () => {
                     className="space-y-4"
                   >
                     <div className="space-y-2">
-                      <Label htmlFor="fullName">Full Name</Label>
+                      <Label className="text-gray-700">Full Name</Label>
                       <div className="relative">
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                         <Input
                           id="fullName"
                           name="fullName"
                           placeholder="John Doe"
                           value={formData.fullName}
                           onChange={handleChange}
-                          className={`pl-10 ${errors.fullName ? 'border-destructive' : ''}`}
+                          className={`pl-10 border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.fullName ? 'border-destructive' : ''}`}
                         />
                       </div>
                       {errors.fullName && (
@@ -266,9 +268,9 @@ const Register: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
+                      <Label className="text-gray-700">Email</Label>
                       <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                         <Input
                           id="email"
                           name="email"
@@ -276,7 +278,7 @@ const Register: React.FC = () => {
                           placeholder="name@example.com"
                           value={formData.email}
                           onChange={handleChange}
-                          className={`pl-10 ${errors.email ? 'border-destructive' : ''}`}
+                          className={`pl-10 border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.email ? 'border-destructive' : ''}`}
                         />
                       </div>
                       {errors.email && (
@@ -285,9 +287,9 @@ const Register: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
+                      <Label className="text-gray-700">Phone Number</Label>
                       <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                         <Input
                           id="phone"
                           name="phone"
@@ -295,7 +297,7 @@ const Register: React.FC = () => {
                           placeholder="9876543210"
                           value={formData.phone}
                           onChange={handleChange}
-                          className={`pl-10 ${errors.phone ? 'border-destructive' : ''}`}
+                          className={`pl-10 border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.phone ? 'border-destructive' : ''}`}
                         />
                       </div>
                       {errors.phone && (
@@ -304,9 +306,9 @@ const Register: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="password">Password</Label>
+                      <Label className="text-gray-700">Password</Label>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                         <Input
                           id="password"
                           name="password"
@@ -314,12 +316,12 @@ const Register: React.FC = () => {
                           placeholder="Create a password"
                           value={formData.password}
                           onChange={handleChange}
-                          className={`pl-10 pr-10 ${errors.password ? 'border-destructive' : ''}`}
+                          className={`pl-10 pr-10 border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.password ? 'border-destructive' : ''}`}
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                         >
                           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
@@ -330,9 +332,9 @@ const Register: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="confirmPassword">Confirm Password</Label>
+                      <Label className="text-gray-700">Confirm Password</Label>
                       <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                         <Input
                           id="confirmPassword"
                           name="confirmPassword"
@@ -340,7 +342,7 @@ const Register: React.FC = () => {
                           placeholder="Confirm your password"
                           value={formData.confirmPassword}
                           onChange={handleChange}
-                          className={`pl-10 ${errors.confirmPassword ? 'border-destructive' : ''}`}
+                          className={`pl-10 border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.confirmPassword ? 'border-destructive' : ''}`}
                         />
                       </div>
                       {errors.confirmPassword && (
@@ -348,7 +350,11 @@ const Register: React.FC = () => {
                       )}
                     </div>
 
-                    <Button type="button" className="w-full" onClick={handleNext}>
+                    <Button
+                      type="button"
+                      className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md transition-all"
+                      onClick={handleNext}
+                    >
                       Next Step
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -364,7 +370,7 @@ const Register: React.FC = () => {
                     exit={{ opacity: 0, x: -20 }}
                     className="space-y-4"
                   >
-                    <Label>Select your role</Label>
+                    <Label className="text-gray-700">Select your role</Label>
                     <RadioGroup
                       value={formData.role}
                       onValueChange={(value) =>
@@ -376,14 +382,14 @@ const Register: React.FC = () => {
                         <RadioGroupItem value={UserRole.CUSTOMER} id="customer" className="peer sr-only" />
                         <Label
                           htmlFor="customer"
-                          className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 hover:bg-muted"
+                          className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg cursor-pointer transition-all peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 hover:bg-gray-50"
                         >
                           <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
                             <ShoppingBag className="h-6 w-6 text-blue-600" />
                           </div>
                           <div className="flex-1">
-                            <p className="font-medium">Customer</p>
-                            <p className="text-sm text-muted-foreground">Browse and order products</p>
+                            <p className="font-medium text-gray-900">Customer</p>
+                            <p className="text-sm text-gray-500">Browse and order products</p>
                           </div>
                         </Label>
                       </div>
@@ -392,14 +398,14 @@ const Register: React.FC = () => {
                         <RadioGroupItem value={UserRole.SELLER} id="seller" className="peer sr-only" />
                         <Label
                           htmlFor="seller"
-                          className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 hover:bg-muted"
+                          className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg cursor-pointer transition-all peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 hover:bg-gray-50"
                         >
                           <div className="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center">
                             <Store className="h-6 w-6 text-green-600" />
                           </div>
                           <div className="flex-1">
-                            <p className="font-medium">Seller</p>
-                            <p className="text-sm text-muted-foreground">Sell your products</p>
+                            <p className="font-medium text-gray-900">Seller</p>
+                            <p className="text-sm text-gray-500">Sell your products</p>
                           </div>
                         </Label>
                       </div>
@@ -408,25 +414,34 @@ const Register: React.FC = () => {
                         <RadioGroupItem value={UserRole.RIDER} id="rider" className="peer sr-only" />
                         <Label
                           htmlFor="rider"
-                          className="flex items-center gap-4 p-4 border rounded-lg cursor-pointer transition-all peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 hover:bg-muted"
+                          className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg cursor-pointer transition-all peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 hover:bg-gray-50"
                         >
                           <div className="h-12 w-12 bg-orange-100 rounded-lg flex items-center justify-center">
                             <Truck className="h-6 w-6 text-orange-600" />
                           </div>
                           <div className="flex-1">
-                            <p className="font-medium">Rider</p>
-                            <p className="text-sm text-muted-foreground">Deliver orders</p>
+                            <p className="font-medium text-gray-900">Rider</p>
+                            <p className="text-sm text-gray-500">Deliver orders</p>
                           </div>
                         </Label>
                       </div>
                     </RadioGroup>
 
                     <div className="flex gap-3">
-                      <Button type="button" variant="outline" className="flex-1" onClick={handleBack}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="flex-1 border-gray-300 hover:bg-gray-50"
+                        onClick={handleBack}
+                      >
                         <ChevronLeft className="mr-2 h-4 w-4" />
                         Back
                       </Button>
-                      <Button type="button" className="flex-1" onClick={handleNext}>
+                      <Button
+                        type="button"
+                        className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md transition-all"
+                        onClick={handleNext}
+                      >
                         Next Step
                         <ChevronRight className="ml-2 h-4 w-4" />
                       </Button>
@@ -451,9 +466,9 @@ const Register: React.FC = () => {
                           exit={{ opacity: 0 }}
                           className="text-center py-8"
                         >
-                          <ShoppingBag className="h-16 w-16 text-primary mx-auto mb-4" />
-                          <h3 className="text-lg font-medium mb-2">Ready to shop!</h3>
-                          <p className="text-muted-foreground">
+                          <ShoppingBag className="h-16 w-16 text-indigo-500 mx-auto mb-4" />
+                          <h3 className="text-lg font-medium text-gray-900 mb-2">Ready to shop!</h3>
+                          <p className="text-gray-500">
                             You're all set. Click the button below to create your account.
                           </p>
                         </motion.div>
@@ -467,14 +482,14 @@ const Register: React.FC = () => {
                           className="space-y-4"
                         >
                           <div className="space-y-2">
-                            <Label htmlFor="storeName">Store Name</Label>
+                            <Label className="text-gray-700">Store Name</Label>
                             <Input
                               id="storeName"
                               name="storeName"
                               placeholder="My Awesome Store"
                               value={formData.storeName}
                               onChange={handleChange}
-                              className={errors.storeName ? 'border-destructive' : ''}
+                              className={`border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.storeName ? 'border-destructive' : ''}`}
                             />
                             {errors.storeName && (
                               <p className="text-sm text-destructive">{errors.storeName}</p>
@@ -482,26 +497,26 @@ const Register: React.FC = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <Label htmlFor="storeDescription">Store Description</Label>
+                            <Label className="text-gray-700">Store Description</Label>
                             <textarea
                               id="storeDescription"
                               name="storeDescription"
                               placeholder="Tell us about your store..."
                               value={formData.storeDescription}
                               onChange={handleChange}
-                              className="w-full min-h-[100px] px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                              className="w-full min-h-[100px] px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-200"
                             />
                           </div>
 
                           <div className="space-y-2">
-                            <Label htmlFor="address">Store Address</Label>
+                            <Label className="text-gray-700">Store Address</Label>
                             <textarea
                               id="address"
                               name="address"
                               placeholder="Enter your store address"
                               value={formData.address}
                               onChange={handleChange}
-                              className={`w-full min-h-[80px] px-3 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary ${
+                              className={`w-full min-h-[80px] px-3 py-2 border border-gray-200 rounded-md text-sm focus:outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-200 ${
                                 errors.address ? 'border-destructive' : ''
                               }`}
                             />
@@ -520,14 +535,14 @@ const Register: React.FC = () => {
                           className="space-y-4"
                         >
                           <div className="space-y-2">
-                            <Label htmlFor="vehicleType">Vehicle Type</Label>
+                            <Label className="text-gray-700">Vehicle Type</Label>
                             <Input
                               id="vehicleType"
                               name="vehicleType"
                               placeholder="e.g., Bike, Scooter, Car"
                               value={formData.vehicleType}
                               onChange={handleChange}
-                              className={errors.vehicleType ? 'border-destructive' : ''}
+                              className={`border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.vehicleType ? 'border-destructive' : ''}`}
                             />
                             {errors.vehicleType && (
                               <p className="text-sm text-destructive">{errors.vehicleType}</p>
@@ -535,14 +550,14 @@ const Register: React.FC = () => {
                           </div>
 
                           <div className="space-y-2">
-                            <Label htmlFor="vehicleNumber">Vehicle Number</Label>
+                            <Label className="text-gray-700">Vehicle Number</Label>
                             <Input
                               id="vehicleNumber"
                               name="vehicleNumber"
                               placeholder="e.g., MH01AB1234"
                               value={formData.vehicleNumber}
                               onChange={handleChange}
-                              className={errors.vehicleNumber ? 'border-destructive' : ''}
+                              className={`border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.vehicleNumber ? 'border-destructive' : ''}`}
                             />
                             {errors.vehicleNumber && (
                               <p className="text-sm text-destructive">{errors.vehicleNumber}</p>
@@ -553,11 +568,19 @@ const Register: React.FC = () => {
                     </AnimatePresence>
 
                     <div className="flex gap-3">
-                      <Button type="button" variant="outline" className="flex-1" onClick={handleBack}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="flex-1 border-gray-300 hover:bg-gray-50"
+                        onClick={handleBack}
+                      >
                         <ChevronLeft className="mr-2 h-4 w-4" />
                         Back
                       </Button>
-                      <Button type="submit" className="flex-1">
+                      <Button
+                        type="submit"
+                        className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md transition-all"
+                      >
                         Create Account
                       </Button>
                     </div>
@@ -567,9 +590,9 @@ const Register: React.FC = () => {
             </form>
 
             {/* Login Link */}
-            <p className="text-center text-sm text-muted-foreground mt-6">
+            <p className="text-center text-sm text-gray-500 mt-6">
               Already have an account?{' '}
-              <Link to="/login" className="text-primary hover:underline font-medium">
+              <Link to="/login" className="text-indigo-600 hover:text-indigo-700 font-medium">
                 Sign in
               </Link>
             </p>
@@ -581,14 +604,14 @@ const Register: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-center text-xs text-muted-foreground mt-8"
+          className="text-center text-xs text-gray-500 mt-8"
         >
           By creating an account, you agree to our{' '}
-          <Link to="/terms" className="hover:underline">
+          <Link to="/terms" className="hover:text-indigo-600 hover:underline">
             Terms of Service
           </Link>{' '}
           and{' '}
-          <Link to="/privacy" className="hover:underline">
+          <Link to="/privacy" className="hover:text-indigo-600 hover:underline">
             Privacy Policy
           </Link>
         </motion.p>
