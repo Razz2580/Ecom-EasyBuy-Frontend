@@ -90,7 +90,6 @@ export const SellerOrderCard: React.FC<SellerOrderCardProps> = ({
       )
     : null;
   
-  const isFar = distance && distance > 2; // More than 2km
   const showRequestRider = isAccepted && order.deliveryMethod === 'RIDER';
 
   return (
