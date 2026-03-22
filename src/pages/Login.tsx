@@ -88,7 +88,7 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-secondary/20 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -103,27 +103,29 @@ const Login: React.FC = () => {
           className="flex justify-center mb-8"
         >
           <div className="flex items-center gap-3">
-            <div className="h-12 w-12 bg-primary rounded-xl flex items-center justify-center">
-              <ShoppingBag className="h-7 w-7 text-primary-foreground" />
+            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+              <ShoppingBag className="h-7 w-7 text-white" />
             </div>
-            <span className="text-2xl font-bold">EasyBuy</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              EasyBuy
+            </span>
           </div>
         </motion.div>
 
-        <Card className="border-0 shadow-xl">
-          <CardHeader className="space-y-1">
+        <Card className="border-0 shadow-xl rounded-2xl overflow-hidden">
+          <CardHeader className="space-y-1 pb-4">
             <CardTitle className="text-2xl text-center">Welcome back</CardTitle>
             <CardDescription className="text-center">
               Enter your credentials to access your account
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email Field */}
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label className="text-gray-700">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     id="email"
                     name="email"
@@ -131,7 +133,7 @@ const Login: React.FC = () => {
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`pl-10 ${errors.email ? 'border-destructive' : ''}`}
+                    className={`pl-10 border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.email ? 'border-destructive' : ''}`}
                   />
                 </div>
                 {errors.email && (
@@ -147,9 +149,9 @@ const Login: React.FC = () => {
 
               {/* Password Field */}
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label className="text-gray-700">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <Input
                     id="password"
                     name="password"
@@ -157,12 +159,12 @@ const Login: React.FC = () => {
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`pl-10 pr-10 ${errors.password ? 'border-destructive' : ''}`}
+                    className={`pl-10 pr-10 border-gray-200 focus:border-indigo-300 focus:ring-indigo-200 ${errors.password ? 'border-destructive' : ''}`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -188,20 +190,24 @@ const Login: React.FC = () => {
                       setFormData((prev) => ({ ...prev, rememberMe: checked as boolean }))
                     }
                   />
-                  <Label htmlFor="rememberMe" className="text-sm font-normal cursor-pointer">
+                  <Label htmlFor="rememberMe" className="text-sm font-normal cursor-pointer text-gray-600">
                     Remember me
                   </Label>
                 </div>
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-primary hover:underline"
+                  className="text-sm text-indigo-600 hover:text-indigo-700 hover:underline"
                 >
                   Forgot password?
                 </Link>
               </div>
 
               {/* Submit Button */}
-              <Button type="submit" className="w-full" size="lg">
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md transition-all"
+                size="lg"
+              >
                 Sign In
               </Button>
             </form>
@@ -209,27 +215,27 @@ const Login: React.FC = () => {
             {/* Divider */}
             <div className="relative my-6">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t" />
+                <div className="w-full border-t border-gray-200" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+                <span className="bg-white px-2 text-gray-500">Or continue with</span>
               </div>
             </div>
 
             {/* Social Login (Placeholder) */}
             <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline" type="button" disabled>
+              <Button variant="outline" type="button" disabled className="border-gray-200 text-gray-600">
                 Google
               </Button>
-              <Button variant="outline" type="button" disabled>
+              <Button variant="outline" type="button" disabled className="border-gray-200 text-gray-600">
                 Facebook
               </Button>
             </div>
 
             {/* Register Link */}
-            <p className="text-center text-sm text-muted-foreground mt-6">
+            <p className="text-center text-sm text-gray-500 mt-6">
               Don't have an account?{' '}
-              <Link to="/register" className="text-primary hover:underline font-medium">
+              <Link to="/register" className="text-indigo-600 hover:text-indigo-700 font-medium">
                 Sign up
               </Link>
             </p>
@@ -241,14 +247,14 @@ const Login: React.FC = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-center text-xs text-muted-foreground mt-8"
+          className="text-center text-xs text-gray-500 mt-8"
         >
           By signing in, you agree to our{' '}
-          <Link to="/terms" className="hover:underline">
+          <Link to="/terms" className="hover:text-indigo-600 hover:underline">
             Terms of Service
           </Link>{' '}
           and{' '}
-          <Link to="/privacy" className="hover:underline">
+          <Link to="/privacy" className="hover:text-indigo-600 hover:underline">
             Privacy Policy
           </Link>
         </motion.p>
