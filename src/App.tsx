@@ -13,6 +13,7 @@ import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 // Pages
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
+import LandingPage from '@/pages/LandingPage';
 import CustomerDashboard from '@/pages/customer/CustomerDashboard';
 import SellerDashboard from '@/pages/seller/SellerDashboard';
 import RiderDashboard from '@/pages/rider/RiderDashboard';
@@ -64,6 +65,7 @@ const App: React.FC = () => {
           <AnimatePresence mode="wait">
             <Routes>
               {/* Public Routes */}
+               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
 
