@@ -198,37 +198,39 @@ const handlePlaceOrder = async (
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b"
+        className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200"
       >
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <div className="h-10 w-10 bg-primary rounded-lg flex items-center justify-center">
-                <ShoppingBag className="h-6 w-6 text-primary-foreground" />
+              <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+                <ShoppingBag className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold hidden sm:block">EasyBuy</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent hidden sm:block">
+                EasyBuy
+              </span>
             </div>
 
             {/* Search Bar */}
             <div className="flex-1 max-w-xl">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                  className="pl-10"
+                  className="pl-10 border-gray-200 focus:border-indigo-300 focus:ring-indigo-200"
                 />
                 <Button
                   size="sm"
-                  className="absolute right-1 top-1/2 -translate-y-1/2"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-sm"
                   onClick={handleSearch}
                 >
                   Search
@@ -243,11 +245,12 @@ const handlePlaceOrder = async (
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate('/profile')}
+                className="hover:bg-gray-100"
               >
-                <User className="h-5 w-5" />
+                <User className="h-5 w-5 text-gray-600" />
               </Button>
-              <Button variant="ghost" size="icon" onClick={logout}>
-                <LogOut className="h-5 w-5" />
+              <Button variant="ghost" size="icon" onClick={logout} className="hover:bg-gray-100">
+                <LogOut className="h-5 w-5 text-gray-600" />
               </Button>
             </div>
           </div>
@@ -262,29 +265,38 @@ const handlePlaceOrder = async (
           animate={{ opacity: 1, y: 0 }}
           className="mb-6"
         >
-          <h1 className="text-2xl font-bold">Welcome, {user?.fullName}!</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-2xl font-bold text-gray-900">Welcome, {user?.fullName}!</h1>
+          <p className="text-gray-500">
             {userLocation ? 'Showing products near you' : 'Discover amazing products'}
           </p>
         </motion.div>
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="browse" className="gap-2">
+          <TabsList className="grid w-full grid-cols-3 mb-6 bg-gray-100 p-1 rounded-xl">
+            <TabsTrigger 
+              value="browse" 
+              className="gap-2 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm rounded-lg"
+            >
               <ShoppingBag className="h-4 w-4" />
               <span className="hidden sm:inline">Browse</span>
             </TabsTrigger>
-            <TabsTrigger value="orders" className="gap-2">
+            <TabsTrigger 
+              value="orders" 
+              className="gap-2 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm rounded-lg"
+            >
               <Package className="h-4 w-4" />
               <span className="hidden sm:inline">My Orders</span>
               {activeOrders.length > 0 && (
-                <Badge variant="secondary" className="ml-1">
+                <Badge variant="secondary" className="ml-1 bg-indigo-100 text-indigo-600">
                   {activeOrders.length}
                 </Badge>
               )}
             </TabsTrigger>
-            <TabsTrigger value="history" className="gap-2">
+            <TabsTrigger 
+              value="history" 
+              className="gap-2 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm rounded-lg"
+            >
               <History className="h-4 w-4" />
               <span className="hidden sm:inline">History</span>
             </TabsTrigger>
@@ -300,9 +312,9 @@ const handlePlaceOrder = async (
                 animate={{ opacity: 1 }}
                 className="text-center py-16"
               >
-                <ShoppingBag className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium">No products found</h3>
-                <p className="text-muted-foreground">
+                <ShoppingBag className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-700">No products found</h3>
+                <p className="text-gray-500">
                   Try adjusting your search or location
                 </p>
               </motion.div>
@@ -325,7 +337,7 @@ const handlePlaceOrder = async (
             {isLoadingOrders ? (
               <div className="space-y-4">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="h-40 bg-muted rounded-lg animate-pulse" />
+                  <div key={i} className="h-40 bg-gray-100 rounded-lg animate-pulse" />
                 ))}
               </div>
             ) : activeOrders.length === 0 ? (
@@ -334,13 +346,13 @@ const handlePlaceOrder = async (
                 animate={{ opacity: 1 }}
                 className="text-center py-16"
               >
-                <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium">No active orders</h3>
-                <p className="text-muted-foreground">
+                <Package className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-700">No active orders</h3>
+                <p className="text-gray-500">
                   Your active orders will appear here
                 </p>
                 <Button 
-                  className="mt-4" 
+                  className="mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md"
                   onClick={() => setActiveTab('browse')}
                 >
                   Start Shopping
@@ -365,7 +377,7 @@ const handlePlaceOrder = async (
             {isLoadingOrders ? (
               <div className="space-y-4">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="h-40 bg-muted rounded-lg animate-pulse" />
+                  <div key={i} className="h-40 bg-gray-100 rounded-lg animate-pulse" />
                 ))}
               </div>
             ) : orderHistory.length === 0 ? (
@@ -374,9 +386,9 @@ const handlePlaceOrder = async (
                 animate={{ opacity: 1 }}
                 className="text-center py-16"
               >
-                <History className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium">No order history</h3>
-                <p className="text-muted-foreground">
+                <History className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-700">No order history</h3>
+                <p className="text-gray-500">
                   Your completed orders will appear here
                 </p>
               </motion.div>
